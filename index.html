@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="claude:viewport-fit-sides" content="cover">
+  <title>DQD Inglês</title>
+
+  <!-- external:start (Tailwind via CDN e fontes do Google; nenhum passo de build) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Public+Sans:wght@400;600&family=Schibsted+Grotesk:wght@600;800&display=swap">
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script>try { tailwind.config = { corePlugins: { preflight: false } }; } catch (e) { /* CDN indisponível: o CSS próprio segura o layout */ }</script>
+  <!-- external:end -->
+
+  <link rel="icon" href="icons/icon-192.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <meta name="theme-color" content="#08705A">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="DQD Inglês">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="app">
+    <header class="topbar">
+      <a class="brand" href="#hoje" aria-label="DQD Inglês, página inicial">
+        <span class="brand-mark">DQD</span>
+        <span class="brand-sub">Descomplica que Destrava</span>
+      </a>
+      <div class="top-right">
+        <span class="chip" id="streakChip" title="Dias seguidos"><span id="streakIcon"></span><b id="streakNum">0</b></span>
+        <span class="chip" id="goalChip" title="Frases de hoje"><b id="goalNum">0/5</b></span>
+        <button class="icon-btn" id="themeBtn" type="button" aria-label="Alternar tema claro e escuro"></button>
+      </div>
+      <div class="topline" aria-hidden="true"><i id="topFill"></i></div>
+    </header>
+
+    <nav class="tabs" id="tabs" aria-label="Seções do app">
+      <a href="#hoje" data-route="hoje"><span data-ico="home"></span><span>Hoje</span></a>
+      <a href="#cotonete" data-route="cotonete"><span data-ico="wave"></span><span>Cotonete</span></a>
+      <a href="#destrava" data-route="destrava"><span data-ico="mic"></span><span>Destrava</span></a>
+      <a href="#chunks" data-route="chunks"><span data-ico="blocks"></span><span>Chunks</span></a>
+    </nav>
+
+    <main id="view" class="wrap"></main>
+  </div>
+
+  <canvas id="confetti" aria-hidden="true"></canvas>
+  <div id="toast" role="status" aria-live="polite"></div>
+
+  <!-- Scripts clássicos (sem módulos ES) para funcionar também ao abrir index.html direto -->
+  <script src="js/core.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/tts.js"></script>
+  <script src="js/cotonete.js"></script>
+  <script src="js/lab.js"></script>
+  <script src="js/chunks.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

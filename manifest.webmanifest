@@ -1,0 +1,16 @@
+{
+  "name": "DQD Inglês",
+  "short_name": "DQD Inglês",
+  "description": "Treino de inglês falado: Efeito Cotonete, Destrava e Chunks.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#F1F4F2",
+  "theme_color": "#08705A",
+  "lang": "pt-BR",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
