@@ -108,7 +108,8 @@
       onEnd: () => orig.words.forEach((w) => w.classList.remove('speaking')) }); };
     const fast = () => { card.classList.add('fast-on'); DQD.tts.speakFast(x.fast, { onEnd: () => card.classList.remove('fast-on') }); };
     card.append(
-      h('div', { class: 'chips' }, h('span', { class: 'tag' }, x.categoria), h('span', { class: 'tag' }, x.padrao)),
+      h('div', { class: 'chips' }, h('span', { class: 'tag' }, x.categoria), h('span', { class: 'tag' }, x.padrao),
+        h('span', { class: 'tag' }, /\?$/.test(x.fast) ? 'Você pergunta' : 'Você responde ou comenta')),
       h('p', { class: 'phrase-big' }, orig.frag),
       h('p', { class: 'respell', title: 'Como soa conectado (grafia aproximada)' }, conn.frag),
       x.pt ? h('p', { class: 'muted' }, x.pt) : null,
