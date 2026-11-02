@@ -1,6 +1,6 @@
 /* sw.js — service worker: guarda o app no aparelho para abrir offline.
    Troque CACHE (ex.: v2) sempre que publicar uma versão nova, para o celular baixar os arquivos atualizados. */
-const CACHE = 'dqd-v1';
+const CACHE = 'dqd-v2';
 const FILES = ['./', './index.html', './css/style.css', './manifest.webmanifest', './icons/icon-192.png', './icons/icon-512.png',
   './js/core.js', './js/data.js', './js/audio.js', './js/tts.js', './js/cotonete.js', './js/lab.js', './js/chunks.js', './js/app.js'];
 

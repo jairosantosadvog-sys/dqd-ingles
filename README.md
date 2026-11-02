@@ -23,7 +23,8 @@ dqd-ingles/
 │   └── app.js            # rotas (#hoje, #cotonete, #destrava, #chunks), tema, confete, avisos
 ├── tools/build_artifact.py   # opcional: junta tudo em dist/artifact.html (arquivo único)
 ├── tools/export_keys.js      # lista as frases/palavras que precisam de áudio (lê js/data.js)
-├── tools/make_audio.py       # gera js/audio.js (voz Piper "Amy")
+├── tools/make_audio.py       # gera js/audio.js (voz feminina Kokoro)
+├── tools/patterns_src.py     # fonte dos 100 padrões por cenário
 └── dist/artifact.html        # saída do script acima
 ```
 
@@ -60,10 +61,13 @@ Para desligar os áudios embutidos, tire a linha `<script src="js/audio.js">` do
 
 A velocidade (x0,5, x0,75, x1, x1,25, x2, x3) é escolhida nos botões "Velocidade" e fica salva no navegador.
 
-## Padrões de conexão
+## Padrões de conexão (100 situações do dia a dia)
 
-No fim do Cotonete há três padrões (Consoante + Vogal, Flap T, Redução de Verbo), definidos em `data.patterns` no `data.js`.
-Cada um tem a frase original, a grafia conectada e o texto falado no modo "Conectada".
+No fim do Cotonete há 103 padrões em 8 grupos: 3 básicos e 100 por cenário (Aeroporto, Shopping, Cafeteria, Pizzaria, Festa de
+vizinhos, Praia, Blitz da polícia). Cada cartão traz a frase, a grafia conectada, a tradução, a dica, e os botões Lenta e Conectada.
+Os dados ficam em `tools/patterns_src.py` (edite lá e rode `python3 tools/patterns_src.py`, que reescreve o bloco `patterns` de
+`js/data.js`). Depois rode `tools/make_audio.py` para gerar os áudios das frases novas. As grafias conectadas são aproximações,
+não IPA.
 
 ## Instalar no celular como app (PWA)
 
