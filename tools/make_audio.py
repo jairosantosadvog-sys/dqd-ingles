@@ -50,7 +50,7 @@ cfg = sherpa_onnx.OfflineTtsConfig(model=mcfg, max_num_sentences=1)
 tts = sherpa_onnx.OfflineTts(cfg)
 
 
-def trim(x, sr, thr=0.003, pad=0.12):
+def trim(x, sr, thr=0.004, pad=0.08):
     """Corta o silêncio do começo e do fim (deixa 40 ms) e normaliza o pico."""
     idx = np.where(np.abs(x) > thr)[0]
     if len(idx) == 0:
