@@ -31,8 +31,8 @@
       els.filters,
       els.list,
       h('h2', { class: 'section-title' }, 'Padrões de conexão'),
-      h('p', { class: 'muted' }, 'Três jeitos comuns de as palavras se ligarem. Ouça a frase devagar e depois conectada.'),
-      patternList());
+      h('p', { class: 'muted' }, 'Frases do dia a dia nos Estados Unidos, por cenário. Ouça devagar, depois conectada, e imite.'),
+      patternSection());
     drawFilters(); drawList(); drawPlayer();
   }
 
@@ -87,30 +87,51 @@
         }, icon('check'), done ? 'Frase treinada hoje' : 'Treinei esta frase')));
   }
 
-  /* ---------- padrões de conexão ---------- */
-  function patternList() {
-    return h('ul', { class: 'list' }, DQD.data.patterns.map((x) => {
-      const orig = phrase(x.original), conn = phrase(x.cotonete);
-      const ok = DQD.tts.supported;
-      const done = P.isDone('pat:' + x.id);
-      const card = h('li', { class: 'card pattern' });
-      const slow = () => { DQD.tts.speakSlow(orig.words.map((w) => w.textContent), {
-        onWord: (i) => orig.words.forEach((w, k) => w.classList.toggle('speaking', k === i)),
-        onEnd: () => orig.words.forEach((w) => w.classList.remove('speaking')) }); };
-      const fast = () => { card.classList.add('fast-on'); DQD.tts.speakFast(x.fast, { onEnd: () => card.classList.remove('fast-on') }); };
-      card.append(
-        h('div', { class: 'chips' }, h('span', { class: 'tag' }, x.categoria), h('span', { class: 'tag' }, x.padrao)),
-        h('p', { class: 'phrase-big' }, orig.frag),
-        h('p', { class: 'respell', title: 'Como soa conectado (grafia aproximada)' }, conn.frag),
-        h('p', {}, x.tip),
-        h('div', { class: 'btn-row' },
-          h('button', { class: 'btn soft', type: 'button', disabled: !ok, onclick: slow }, icon('volume'), 'Lenta'),
-          h('button', { class: 'btn', type: 'button', disabled: !ok, onclick: fast }, icon('volume'), 'Conectada'),
-          h('button', { class: done ? 'btn good' : 'btn ghost', type: 'button', onclick: (e) => {
-            const r = P.markDone('pat:' + x.id); DQD.ui.notify(r); e.currentTarget.className = 'btn good';
-          } }, icon('check'), done ? 'Treinada hoje' : 'Treinei')));
-      return card;
-    }));
+  /* ---------- padrões de conexão (por cenário) ---------- */
+  let patScene = null;      // cenário aberto
+  let patBox = null;        // contêiner: chips + lista
+
+  function patternSection() {
+    patBox = h('div', { class: 'patterns' });
+    if (!patScene) patScene = DQD.data.cenarios[0];
+    drawPatterns();
+    return patBox;
+  }
+
+  function patternCard(x) {
+    const orig = phrase(x.original), conn = phrase(x.cotonete);
+    const ok = DQD.tts.supported;
+    const done = P.isDone('pat:' + x.id);
+    const card = h('li', { class: 'card pattern' });
+    const slow = () => { DQD.tts.speakSlow(orig.words.map((w) => w.textContent), {
+      onWord: (i) => orig.words.forEach((w, k) => w.classList.toggle('speaking', k === i)),
+      onEnd: () => orig.words.forEach((w) => w.classList.remove('speaking')) }); };
+    const fast = () => { card.classList.add('fast-on'); DQD.tts.speakFast(x.fast, { onEnd: () => card.classList.remove('fast-on') }); };
+    card.append(
+      h('div', { class: 'chips' }, h('span', { class: 'tag' }, x.categoria), h('span', { class: 'tag' }, x.padrao)),
+      h('p', { class: 'phrase-big' }, orig.frag),
+      h('p', { class: 'respell', title: 'Como soa conectado (grafia aproximada)' }, conn.frag),
+      x.pt ? h('p', { class: 'muted' }, x.pt) : null,
+      h('p', {}, x.tip),
+      h('div', { class: 'btn-row' },
+        h('button', { class: 'btn soft', type: 'button', disabled: !ok, onclick: slow }, icon('volume'), 'Lenta'),
+        h('button', { class: 'btn', type: 'button', disabled: !ok, onclick: fast }, icon('volume'), 'Conectada'),
+        h('button', { class: done ? 'btn good' : 'btn ghost', type: 'button', onclick: (e) => {
+          const r = P.markDone('pat:' + x.id); DQD.ui.notify(r); e.currentTarget.className = 'btn good';
+        } }, icon('check'), done ? 'Treinada hoje' : 'Treinei')));
+    return card;
+  }
+
+  function drawPatterns() {
+    const D = DQD.data;
+    const items = D.patterns.filter((x) => x.cenario === patScene);
+    DQD.fill(patBox,
+      h('div', { class: 'chips', role: 'group', 'aria-label': 'Escolher cenário' }, D.cenarios.map((c) =>
+        h('button', {
+          class: 'pill', type: 'button', 'aria-pressed': String(c === patScene),
+          onclick: () => { stop(); patScene = c; drawPatterns(); }
+        }, c + ' (' + D.patterns.filter((x) => x.cenario === c).length + ')'))),
+      h('ul', { class: 'list' }, items.map(patternCard)));
   }
 
   /* ---------- filtros e lista ---------- */
